@@ -1,0 +1,144 @@
+CREATE DATABASE Library_Management;
+USE Library_Management;
+CREATE TABLE BRANCH(Branch_no INT PRIMARY KEY,Manager_Id INT,Branch_address VARCHAR(50),CONTACT_NO INT);
+DELIMITER $$
+CREATE PROCEDURE BRANCH_UPDATE(IN Branch_no INT,Manager_Id INT,Branch_address VARCHAR(50),CONTACT_NO INT)
+BEGIN
+INSERT INTO BRANCH VALUES(Branch_no ,Manager_Id ,Branch_address ,CONTACT_NO );
+END $$
+DELIMITER ;
+CALL BRANCH_UPDATE(001,0001,'THAMMANAMPO.ERNAKULAM',04781236);
+CALL BRANCH_UPDATE(002,0002,'KARUKUTTIPO.ERNAKULAM',04781237);
+CALL BRANCH_UPDATE(003,0004,'EDAPPALLY.JN_ERNAKULAM',04781238);
+CALL BRANCH_UPDATE(004,0005,'ALUVA,121,STREET1.ERNAKULAM',04781239);
+CALL BRANCH_UPDATE(005,0006,'THOPPUMPADY_JN.ERNAKULAM',04781240);
+CALL BRANCH_UPDATE(006,0007,'KAKKANAD_P.O.ERNAKULAM',04781236);
+CALL BRANCH_UPDATE(007,0003,'PALIYAKKARA_JN.ERNAKULAM',04781233);
+CALL BRANCH_UPDATE(008,0008,'THATHAPALLY_PO.ERNAKULAM',04781242);
+CALL BRANCH_UPDATE(009,0009,'THAMMANAMPO.ERNAKULAM',04781236);
+CALL BRANCH_UPDATE(010,0010,'THAMMANAMPO.ERNAKULAM',04781236);
+SELECT * FROM BOOKS;
+CREATE TABLE EMPLOYEE(Emp_Id INT  PRIMARY KEY,Emp_name VARCHAR(20),Job_Position VARCHAR(15),Salary INT,Branch_no INT,FOREIGN KEY
+ (Branch_no) REFERENCES BRANCH(Branch_no));
+DELIMITER $$
+CREATE PROCEDURE EMPLOYEE_UPDATE(IN Emp_Id INT, Emp_name VARCHAR(20), Job_Position VARCHAR(15),Salary INT,Branch_no INT)
+BEGIN
+INSERT INTO EMPLOYEE VALUES(Emp_Id ,Emp_name ,Job_Position ,Salary ,Branch_no  );
+END $$
+DELIMITER ;
+CALL EMPLOYEE_UPDATE(111,'JOSEPH_JOHN',' librarian',55000,001);
+CALL EMPLOYEE_UPDATE(112,'JEFFY_PHILIP',' librarian',45000,001);
+CALL EMPLOYEE_UPDATE(113,'MATHEW_THOMAS',' librarian',55000,002);
+CALL EMPLOYEE_UPDATE(114,'MINI_JOHN',' librarian',45000,002);
+CALL EMPLOYEE_UPDATE(115,'HARPER_PEN',' librarian',55000,003);
+CALL EMPLOYEE_UPDATE(116,'SARA_ICEBRUG',' librarian',55000,004);
+CALL EMPLOYEE_UPDATE(117,'TONY_ALEX',' librarian',65000,005);
+CALL EMPLOYEE_UPDATE(118,'MARY_JENNER',' librarian',75000,006);
+CALL EMPLOYEE_UPDATE(119,'SOPHY_DOE',' librarian',75000,007);
+CALL EMPLOYEE_UPDATE(120,'JOHNSON',' librarian',65050,008);
+CALL EMPLOYEE_UPDATE(121,'SIDHARTH',' librarian',75700,009);
+CALL EMPLOYEE_UPDATE(122,'LEO_MARTIN',' librarian',55080,010);
+CALL EMPLOYEE_UPDATE(128,'KIM_SAM','TECHNISION',48000,001);
+CALL EMPLOYEE_UPDATE(100,'ROERT_PERRY','ACCOUNTANT',48000,001);
+CALL EMPLOYEE_UPDATE(130,'WILL_SMITH','QUALITY_CONTROL',42000,001);
+CALL EMPLOYEE_UPDATE(129,'URUSWELA_PIE','CLEANER',28000,001);
+CREATE TABLE CUSTOMER(Customer_Id INT PRIMARY KEY,Customer_name VARCHAR(20),Customer_address VARCHAR(50),Reg_date DATE);
+INSERT INTO CUSTOMER (Customer_Id, Customer_name, Customer_address, Reg_date)VALUES
+     (1001, 'John Doe', '123 Main St, Cityville', '2021-01-01'),
+    (1002, 'Jane Smith', '456 Oak St, Townsville', '2022-01-02'),
+    (1003, 'Bob Johnson', '789 Maple St, Villageton', '2022-01-03'),
+    (4025, 'Alice Brown', '101 Pine St, Hamletville', '2018-01-04'),
+    (1250, 'Charlie Davis', '202 Cedar St, Boroughburg', '2022-01-05'),
+    (6147, 'Eva White', '303 Elm St, Metropolis', '2020-01-06'),
+    (7001, 'Frank Miller', '404 Birch St, Megatown', '2022-01-07'),
+    (8888, 'Grace Wilson', '505 Walnut St, Summit City', '2022-01-08'),
+    (9000, 'Henry Lee', '606 Spruce St, Lakeside', '2019-01-09'),
+    (1110, 'Ivy Green', '707 Fir St, Riverside', '2023-01-10');
+    SELECT*FROM CUSTOMER;
+    
+    
+    CREATE TABLE IssueStatus (Issue_Id INT PRIMARY KEY,Issued_cust INT,Issued_book_name VARCHAR(50),Issue_date DATE,Isbn_book VARCHAR(13),
+    FOREIGN KEY (Issued_cust) REFERENCES CUSTOMER(customer_id),
+    FOREIGN KEY (Isbn_book) REFERENCES BOOKS(isbn));
+    INSERT INTO IssueStatus VALUES(0001,1003,'Cooking 101','2023-01-28','978-1-89-5');
+    INSERT INTO IssueStatus VALUES(0002,1110,'Poetry Anthology','2022-11-20','978-1-89-6');
+    INSERT INTO IssueStatus VALUES(0003,9000,'Bird Watching Guide','2022-12-25','978-1-89-19');
+    INSERT INTO IssueStatus VALUES(0004,1001,'Healthy Living','2022-11-22','978-1-89-13');
+     INSERT INTO IssueStatus VALUES(0005,1002,'The Great Novel','2021-09-12','978-1-89-11');
+    INSERT INTO IssueStatus VALUES(0006,7001,'Introduction to SQL','2020-06-01','978-1-89-0');
+    INSERT INTO IssueStatus VALUES(0007,1110,'DIY Home Improvement','2023-06-06','978-1-89-16');
+    INSERT INTO IssueStatus VALUES(0008,1110,'Modern Art Movements','2023-06-06','978-1-89-15');
+    INSERT INTO IssueStatus VALUES(0009,8888,'Financial Planning 101','2023-06-22','978-1-89-14');
+     INSERT INTO IssueStatus VALUES(0010,8888,'Mystery at Midnight','2023-06-22','978-1-89-4');
+
+CREATE TABLE Books (ISBN VARCHAR(13) PRIMARY KEY,Book_title VARCHAR(50),Category VARCHAR(25),Rental_Price INT,Status VARCHAR(3)
+,Author VARCHAR(30),Publisher VARCHAR(50));
+INSERT INTO Books (ISBN, Book_title, Category, Rental_Price, Status, Author, Publisher)
+VALUES
+    ('978-1-89-0', 'Introduction to SQL', 'Programming', 300, 'yes', 'John Smith', 'Tech Books Inc.'),
+    ('978-1-89-1', 'Data Structures and Algorithms', 'Programming', 350, 'yes', 'Alice Johnson', 'Code Publishing'),
+    ('978-1-89-2', 'History of Ancient Civilizations', 'History', 499, 'no', 'David Brown', 'Historical Press'),
+    ('978-1-89-3', 'Physics for Beginners', 'Science', 299, 'yes', 'Emily White', 'Scientific Publications'),
+    ('978-1-89-4', 'Mystery at Midnight', 'Fiction', 399, 'yes', 'Michael Black', 'Novel House'),
+    ('978-1-89-5', 'Cooking 101', 'Cooking', 19.99, '199', 'Sarah Green', 'Culinary Books Co.'),
+    ('978-1-89-6', 'Poetry Anthology', 'Literature', 425, 'yes', 'Thomas Gray', 'Verse Press'),
+    ('978-1-89-7', 'Art and Culture', 'Arts', 635, 'yes', 'Olivia Turner', 'Artistic Publications'),
+    ('978-1-89-8', 'Environmental Science', 'Science', 550, 'no', 'Daniel Reed', 'Green Earth Books'),
+    ('978-1-89-9', 'Travelogue: Exploring Asia', 'Travel', 650, 'yes', 'Sophia Lee', 'Wanderlust Publishers'),
+    ('978-1-89-10', 'Beginner'' Guide to Python', 'Programming', 220, 'yes', 'Robert Clark', 'Code Masters'),
+    ('978-1-89-11', 'The Great Novel', 'Fiction', 599, 'no', 'Jessica Miller', 'Novel House'),
+    ('978-1-89-12', 'Astronomy: The Cosmos Revealed', 'Science', 366, 'yes', 'Brian Turner', 'Stellar Books'),
+    ('978-1-89-13', 'Healthy Living', 'Health', 770, 'yes', 'Emma Harris', 'Wellness Publications'),
+    ('978-1-89-14', 'Financial Planning 101', 'Finance', 990, 'no', 'James Walker', 'Money Matters Inc.'),
+    ('978-1-89-15', 'Modern Art Movements', 'Arts', 675, 'yes', 'Lily Martinez', 'Artistic Publications'),
+    ('978-1-89-16', 'DIY Home Improvement', 'Home', 199, 'yes', 'Richard Taylor', 'Home Press'),
+    ('978-1-89-17', 'Detective Stories Collection', 'Fiction', 1220, 'no', 'Grace Evans', 'Mystery House'),
+    ('978-1-89-18', 'Introduction to Psychology', 'Psychology', 1350, 'yes', 'William Turner', 'Mind Matters'),
+    ('978-1-89-19', 'Bird Watching Guide', 'Nature', 1200, 'yes', 'Lucy Robinson', 'Nature Books'),
+    ('978-1-89-20', 'Time Management Techniques', 'Self-Help', 988, 'no', 'Andrew Davis', 'Personal Growth Press');
+
+CREATE TABLE ReturnStatus (Return_Id INT PRIMARY KEY,Return_cust VARCHAR(30),Return_book_name VARCHAR(50),Return_date DATE,
+Isbn_book2 VARCHAR(13),FOREIGN KEY (Isbn_book2) REFERENCES Books(ISBN));
+INSERT INTO ReturnStatus (Return_Id, Return_cust, Return_book_name, Return_date, Isbn_book2)
+VALUES
+    (0111, 'John Doe', 'Introduction to SQL', '2023-01-15', '978-1-89-0'),
+    (2001, 'Jane Smith', 'Data Structures and Algorithms', '2023-02-20', '978-1-89-1'),
+    (3111, 'Bob Johnson', 'Physics for Beginners', '2023-03-25', '978-1-89-3'),
+    (4114, 'Alice Brown', 'Mystery at Midnight', '2023-04-10', '978-1-89-4'),
+    (5612, 'Charlie Davis', 'Art and Culture', '2023-05-05', '978-1-89-7'),
+    (1263, 'Eva White', 'Beginner''Guide to Python', '2023-06-12', '978-1-89-10'),
+    (0027, 'Frank Miller', 'Healthy Living', '2023-07-18', '978-1-89-13'),
+    (2548, 'Grace Wilson', 'Modern Art Movements', '2023-08-22', '978-1-89-15'),
+    (0259, 'Henry Lee', 'Detective Stories Collection', '2023-09-30', '978-1-89-17'),
+    (1470, 'Ivy Green', 'Introduction to Psychology', '2023-10-08', '978-1-89-18'),
+    (1361, 'Bob Johnson', 'Bird Watching Guide', '2023-11-15', '978-1-89-19'),
+    (2112, 'Charlie Davis', 'Time Management Techniques', '2023-12-20', '978-1-89-20');
+
+
+#1.Retrieve the book title, category, and rental price of all available books.
+SELECT BOOK_TITLE,CATEGORY,RENTAL_PRICE FROM BOOKS WHERE STATUS='YES';
+#2. List the employee names and their respective salaries in descending order of salary.
+SELECT EMP_NAME,SALARY FROM EMPLOYEE ORDER BY SALARY DESC;
+#3. Retrieve the book titles and the corresponding customers who have issued those books.
+SELECT  CUSTOMER.CUSTOMER_NAME,CUSTOMER.CUSTOMER_ID,IssueStatus.Issue_Id,ISSUESTATUS.Issued_cust,ISSUESTATUS.Issued_book_name
+FROM CUSTOMER INNER JOIN  ISSUESTATUS ON CUSTOMER.CUSTOMER_ID=ISSUESTATUS.ISSUED_CUST;
+#4. Display the total count of books in each category.
+SELECT CATEGORY,COUNT(*) FROM BOOKS GROUP BY CATEGORY;
+#5 Retrieve the employee names and their positions for the employees whose salaries are above Rs.50,000.
+SELECT EMP_NAME,SALARY,JOB_POSITION FROM EMPLOYEE WHERE SALARY>50000;
+#6. List the customer names who registered before 2022-01-01 and have not issued any books yet.
+SELECT CUSTOMER_NAME FROM CUSTOMER LEFT JOIN issueStatus ON issued_cust = customer.customer_id WHERE reg_date < '2022-01-01'
+ AND  issueStatus.ISSUED_CUST IS NULL;
+   
+#7. Display the branch numbers and the total count of employees in each branch.
+SELECT BRANCH_NO,COUNT(EMP_ID) FROM EMPLOYEE GROUP BY BRANCH_NO;
+#8.Display the names of customers who have issued books in the month of June 2023.
+
+ SELECT CUSTOMER.CUSTOMER_ID,CUSTOMER.CUSTOMER_NAME ,ISSUESTATUS.ISSUED_CUST ,ISSUESTATUS.ISSUED_BOOK_NAME 
+FROM CUSTOMER INNER JOIN  ISSUESTATUS ON CUSTOMER.CUSTOMER_ID=ISSUESTATUS.ISSUED_CUST 
+WHERE ISSUESTATUS.issue_date BETWEEN '2023-06-01' AND '2023-06-30';
+#9. Retrieve book_title from book table containing history.
+SELECT BOOK_TITLE FROM BOOKS WHERE CATEGORY='HISTORY';
+
+#10. Retrieve the branch numbers along with the count of employees for branches having more than 5 employees
+SELECT BRANCH_NO,COUNT(EMP_ID) FROM EMPLOYEE GROUP BY BRANCH_NO HAVING COUNT(EMP_ID)>=5;
